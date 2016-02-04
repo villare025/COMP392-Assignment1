@@ -51,30 +51,32 @@ var cuBeLegRight;
 function init() {
     // Instantiate a new Scene object
     scene = new Scene();
-    setupRenderer(); // setup the default renderer
-    setupCamera(); // setup the camera
-    // add an axis helper to the scene
+    // Setup the default renderer
+    setupRenderer();
+    // Setup the Camera
+    setupCamera();
+    // Add Axis Helper to Scene
     axes = new AxisHelper(20);
     scene.add(axes);
-    console.log("Added Axis Helper to Scene...");
+    console.log("Added Axis Helper to Scene");
     //Add a Plane to the Scene
     plane = new gameObject(new PlaneGeometry(60, 40, 1, 1), new LambertMaterial({ color: 0xffffff }), 0, 0, 0);
     plane.rotation.x = -0.5 * Math.PI;
     scene.add(plane);
-    console.log("Added Plane Primitive to scene...");
-    // Add an AmbientLight to the scene
+    console.log("Added Plane Primitive (Floor) to Scene");
+    // Add AmbientLight to Scene
     ambientLight = new AmbientLight(0x090909);
     scene.add(ambientLight);
     console.log("Added an Ambient Light to Scene");
-    // Add a SpotLight to the scene
+    // Add SpotLight to Scene
     spotLight = new SpotLight(0xffffff);
     spotLight.position.set(-40, 60, 10);
     spotLight.castShadow = true;
     scene.add(spotLight);
     console.log("Added a SpotLight Light to Scene");
-    /*
-        Build Cube Being (cuBe)
-    */
+    ////////////////////////////////////////////////////
+    ////       Start Building Cube Being (cuBe)     ////
+    ////////////////////////////////////////////////////
     // Create CuBe Torso
     cubeMaterial = new LambertMaterial({ color: 0xB67DFC });
     cubeGeometry = new CubeGeometry(2, 5, 4);
@@ -82,8 +84,9 @@ function init() {
     cuBeTorso.castShadow = true;
     cuBeTorso.receiveShadow = true;
     cuBeTorso.position.y = 7.5;
-    // Add Torso to scene
+    // Add Torso to Scene
     scene.add(cuBeTorso);
+    console.log("Added cuBe's Essential Parts Container(Torso) to Scene");
     // Create CuBe Head
     cubeMaterial = new LambertMaterial({ color: 0xFAE7D0 });
     cubeGeometry = new CubeGeometry(1.6, 1.9, 1.8);
@@ -91,8 +94,9 @@ function init() {
     cuBeHead.castShadow = true;
     cuBeHead.receiveShadow = true;
     cuBeHead.position.y = 3;
-    // Add Head to Torso mesh
+    // Add Head to Torso Mesh
     cuBeTorso.add(cuBeHead);
+    console.log("Added cuBe's Brains to Scene");
     // Create Left Arm
     cubeMaterial = new LambertMaterial({ color: 0xFAE7D0 });
     cubeGeometry = new CubeGeometry(1, 1, 3);
@@ -102,8 +106,9 @@ function init() {
     cuBeArmLeft.position.x = 0;
     cuBeArmLeft.position.y = 1.5;
     cuBeArmLeft.position.z = -3.5;
-    // Add Left Arm to Torso mesh
+    // Add Left Arm to Torso Mesh
     cuBeTorso.add(cuBeArmLeft);
+    console.log("Added cuBe's Left Arm to Scene");
     // Create Right Arm
     cubeMaterial = new LambertMaterial({ color: 0xFAE7D0 });
     cubeGeometry = new CubeGeometry(1, 1, 3);
@@ -113,8 +118,9 @@ function init() {
     cuBeArmRight.position.x = 0;
     cuBeArmRight.position.y = 1.5;
     cuBeArmRight.position.z = 3.5;
-    // Add Right Arm to Torso mesh
+    // Add Right Arm to Torso Mesh
     cuBeTorso.add(cuBeArmRight);
+    console.log("Added cuBe's Right Arm to Scene");
     // Create Left Leg
     cubeMaterial = new LambertMaterial({ color: 0xFAE7D0 });
     cubeGeometry = new CubeGeometry(1, 4, 1);
@@ -124,8 +130,9 @@ function init() {
     cuBeLegLeft.position.x = 0;
     cuBeLegLeft.position.y = -4;
     cuBeLegLeft.position.z = -0.9;
-    // Add Left Leg to Torso mesh
+    // Add Left Leg to Torso Mesh
     cuBeTorso.add(cuBeLegLeft);
+    console.log("Added cuBe's Left Light to Scene");
     //Create Right Leg
     cubeMaterial = new LambertMaterial({ color: 0xFAE7D0 });
     cubeGeometry = new CubeGeometry(1, 4, 1);
@@ -135,22 +142,41 @@ function init() {
     cuBeLegRight.position.x = 0;
     cuBeLegRight.position.y = -4;
     cuBeLegRight.position.z = 0.9;
-    // Add Right Leg to Torso mesh
+    // Add Right Leg to Torso Mesh
     cuBeTorso.add(cuBeLegRight);
-    // add controls
+    console.log("Added cuBe's Right Light to Scene");
+    console.log("Finished Building Cube Being to Scene");
+    ////////////////////////////////////////////////////
+    ////       End Building Cube Being (cuBe)       ////
+    ////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////
+    ////Start Building Cube Being's Overseer Control////
+    ////////////////////////////////////////////////////
+    // Add Scene Controls
     gui = new GUI();
-    // Add framerate stats
+    // Add Frame Rate Stats
     addStatsObject();
-    console.log("Added Stats to scene...");
+    console.log("Added Stats to Scene");
+    // Add Overseer Controls 
+    //   >> Rotations
+    //   >> Outfit Change
+    console.log("Added Overseer Controls");
     document.body.appendChild(renderer.domElement);
     gameLoop(); // render the scene	
     window.addEventListener('resize', onResize, false);
+    //////////////////////////////////////////////////// 
+    //// End Building Cube Being's Overseer Control ////
+    ////////////////////////////////////////////////////
 }
-function onResize() {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
+// Setup Main Game Loop
+function gameLoop() {
+    stats.update();
+    // Render Using requestAnimationFrame
+    requestAnimationFrame(gameLoop);
+    // Render the Scene
+    renderer.render(scene, camera);
 }
+// Setup GUI Controls (for the Overseer) 
 function addControl(controlObject) {
     gui.add(controlObject, 'clone');
     for (var index = 0; index < 8; index++) {
@@ -161,6 +187,7 @@ function addControl(controlObject) {
         folder.add(controlObject.points[index], 'z', -10, 10);
     }
 }
+//Setup Statistics
 function addStatsObject() {
     stats = new Stats();
     stats.setMode(0);
@@ -169,29 +196,27 @@ function addStatsObject() {
     stats.domElement.style.top = '0px';
     document.body.appendChild(stats.domElement);
 }
-// Setup main game loop
-function gameLoop() {
-    stats.update();
-    // render using requestAnimationFrame
-    requestAnimationFrame(gameLoop);
-    // render the scene
-    renderer.render(scene, camera);
+// Set Aspect Ratio Based on Window Size
+function onResize() {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
 }
-// Setup default renderer
+// Setup Default Renderer
 function setupRenderer() {
     renderer = new Renderer();
     renderer.setClearColor(0xEEEEEE, 1.0);
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.shadowMap.enabled = true;
-    console.log("Finished setting up Renderer...");
+    console.log("Finished setting up Renderer");
 }
-// Setup main camera for the scene
+// Setup Main Camera for the Scene
 function setupCamera() {
     camera = new PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
     camera.position.x = -20;
     camera.position.y = 25;
     camera.position.z = 20;
     camera.lookAt(new Vector3(5, 0, 0));
-    console.log("Finished setting up Camera...");
+    console.log("Finished setting up Camera");
 }
 //# sourceMappingURL=game.js.map
