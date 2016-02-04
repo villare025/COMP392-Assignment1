@@ -48,8 +48,11 @@ var step: number = 0;
 var cubeGeometry:CubeGeometry;
 var cubeMaterialSkin:LambertMaterial;
 var cubeMaterialTorso:LambertMaterial;
-var cuBeHead:Mesh;
+var cubeMaterialEyes:LambertMaterial;
 var cuBeTorso:Mesh;
+var cuBeHead:Mesh;
+var cuBeEyeLeft:Mesh;
+var cuBeEyeRight:Mesh;
 var cuBeArmLeft:Mesh;
 var cuBeArmRight:Mesh;
 var cuBeLegLeft:Mesh;
@@ -100,8 +103,9 @@ function init() {
     ////////////////////////////////////////////////////
     
     // Declare CuBe Colors
-    cubeMaterialTorso = new LambertMaterial({color:0xB67DFC});
     cubeMaterialSkin = new LambertMaterial({color:0xFAE7D0});
+    cubeMaterialTorso = new LambertMaterial({color:0xB67DFC});
+    cubeMaterialEyes = new LambertMaterial({color:0x595959});
     console.log("Declared cuBe's 'Fifty' Shades");
     
     // Create CuBe Torso
@@ -124,7 +128,33 @@ function init() {
     
     // Add Head to Torso Mesh
     cuBeTorso.add(cuBeHead); 
-    console.log("Added cuBe's Brains to Scene");    
+    console.log("Added cuBe's Brains to Scene");
+    
+    // Create Left Eye
+    cubeGeometry = new CubeGeometry(0.1, 0.5, 0.2);
+    cuBeEyeLeft = new Mesh(cubeGeometry, cubeMaterialEyes);
+    cuBeEyeLeft.castShadow = true;
+    cuBeEyeLeft.receiveShadow = true;
+    cuBeEyeLeft.position.x = -0.9;
+    cuBeEyeLeft.position.y = 0.5;
+    cuBeEyeLeft.position.z = -0.2;
+    
+    // Add Left Eye to Head Mesh
+    cuBeHead.add(cuBeEyeLeft); 
+    console.log("Added cuBe's Left Eye to Scene");    
+    
+    // Create Right Eye
+    cubeGeometry = new CubeGeometry(0.1, 0.5, 0.2);
+    cuBeEyeRight = new Mesh(cubeGeometry, cubeMaterialEyes);
+    cuBeEyeRight.castShadow = true;
+    cuBeEyeRight.receiveShadow = true;
+    cuBeEyeRight.position.x = -0.9;
+    cuBeEyeRight.position.y = 0.5;
+    cuBeEyeRight.position.z = 0.2;
+    
+    // Add Right Eye to Head Mesh
+    cuBeHead.add(cuBeEyeRight); 
+    console.log("Added cuBe's Right Eye to Scene");    
     
     // Create Left Arm
     cubeGeometry = new CubeGeometry(1, 1, 3);
