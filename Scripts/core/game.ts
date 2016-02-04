@@ -47,7 +47,7 @@ var step: number = 0;
 // Create Cube Being (cuBe) Body Parts
 var cubeGeometry:CubeGeometry;
 var cubeMaterialSkin:LambertMaterial;
-var cubeMaterialTorso:LambertMaterial;
+var cubeMaterialOutfit:LambertMaterial;
 var cubeMaterialEyes:LambertMaterial;
 var cuBeTorso:Mesh;
 var cuBeHead:Mesh;
@@ -57,6 +57,8 @@ var cuBeArmLeft:Mesh;
 var cuBeArmRight:Mesh;
 var cuBeLegLeft:Mesh;
 var cuBeLegRight:Mesh;
+var cuBeFootLeft:Mesh;
+var cuBeFootRight:Mesh;
 var changeOutfit = "#B67DFC";
 var changeSkin = "#FAE7D0";
 
@@ -104,13 +106,13 @@ function init() {
     
     // Declare CuBe Colors
     cubeMaterialSkin = new LambertMaterial({color:0xFAE7D0});
-    cubeMaterialTorso = new LambertMaterial({color:0xB67DFC});
+    cubeMaterialOutfit = new LambertMaterial({color:0xB67DFC});
     cubeMaterialEyes = new LambertMaterial({color:0x595959});
     console.log("Declared cuBe's 'Fifty' Shades");
     
     // Create CuBe Torso
     cubeGeometry = new CubeGeometry(2, 5, 4);
-    cuBeTorso = new Mesh(cubeGeometry, cubeMaterialTorso);
+    cuBeTorso = new Mesh(cubeGeometry, cubeMaterialOutfit);
     cuBeTorso.castShadow = true;
     cuBeTorso.receiveShadow = true;
     cuBeTorso.position.y = 7.5;
@@ -193,7 +195,7 @@ function init() {
     
     // Add Left Leg to Torso Mesh
     cuBeTorso.add(cuBeLegLeft);
-    console.log("Added cuBe's Left Light to Scene");
+    console.log("Added cuBe's Left Leg to Scene");
     
     //Create Right Leg
     cubeGeometry = new CubeGeometry(1, 4, 1);
@@ -206,10 +208,35 @@ function init() {
     
     // Add Right Leg to Torso Mesh
     cuBeTorso.add(cuBeLegRight);
-    console.log("Added cuBe's Right Light to Scene");
+    console.log("Added cuBe's Right Leg to Scene");
     
-   
+    // Create Left Foot/Shoe
+    cubeGeometry = new CubeGeometry(1.6, 0.7, 1);
+    cuBeFootLeft = new Mesh(cubeGeometry, cubeMaterialOutfit);
+    cuBeFootLeft.castShadow = true;
+    cuBeFootLeft.receiveShadow = true;
+    cuBeFootLeft.position.x = -0.3;
+    cuBeFootLeft.position.y = -2.35;
+    
+    // Add Left Foot to Left Leg Mesh
+    cuBeLegLeft.add(cuBeFootLeft);
+    console.log("Added cuBe's Left Shoe to Scene");
+    
+    // Create Right Foot/Shoe
+    cubeGeometry = new CubeGeometry(1.6, 0.7, 1);
+    cuBeFootRight = new Mesh(cubeGeometry, cubeMaterialOutfit);
+    cuBeFootRight.castShadow = true;
+    cuBeFootRight.receiveShadow = true;
+    cuBeFootRight.position.x = -0.3;
+    cuBeFootRight.position.y = -2.35;
+    
+    // Add Right Foot to Right Leg Mesh
+    cuBeLegRight.add(cuBeFootRight);
+    console.log("Added cuBe's Right Shoe to Scene");
+    
+    
     console.log("Finished Building Cube Being to Scene");
+    
     ////////////////////////////////////////////////////
     ////       End Building Cube Being (cuBe)       ////
     ////////////////////////////////////////////////////
@@ -249,7 +276,7 @@ function addControl(controlObject: Control): void {
     gui.add(controlObject, 'rotateY', false);
     gui.add(controlObject, 'rotateZ', false);
     
-    gui.addColor(controlObject, 'changeOutfit').onChange((color) =>{cubeMaterialTorso.color = new Color(color);});
+    gui.addColor(controlObject, 'changeOutfit').onChange((color) =>{cubeMaterialOutfit.color = new Color(color);});
     gui.addColor(controlObject, 'changeSkin').onChange((color) =>{cubeMaterialSkin.color = new Color(color);});
 }
 // Setup Main Game Loop
