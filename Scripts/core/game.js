@@ -40,7 +40,7 @@ var gui;
 var stats;
 var step = 0;
 // Create Cube Being (cuBe) Body Parts
-var cubeGeoMetry;
+var cubeGeometry;
 var cubeMaterial;
 var cuBeHead;
 var cuBeTorso;
@@ -84,14 +84,24 @@ function init() {
     /*
         Build Cube Being (cuBe)
     */
-    //Create Body
+    // Create CuBe Torso
     cubeMaterial = new LambertMaterial({ color: 0xB67DFC });
-    cubeGeoMetry = new CubeGeometry(2, 5, 4);
-    cuBeTorso = new Mesh(cubeGeoMetry, cubeMaterial);
+    cubeGeometry = new CubeGeometry(2, 5, 4);
+    cuBeTorso = new Mesh(cubeGeometry, cubeMaterial);
     cuBeTorso.castShadow = true;
     cuBeTorso.receiveShadow = true;
     cuBeTorso.position.y = 7.5;
+    // Add Torso to scene
     scene.add(cuBeTorso);
+    // Create CuBe Head
+    cubeMaterial = new LambertMaterial({ color: 0xFAE7D0 });
+    cubeGeometry = new CubeGeometry(1.6, 1.9, 1.8);
+    cuBeHead = new Mesh(cubeGeometry, cubeMaterial);
+    cuBeHead.castShadow = true;
+    cuBeHead.receiveShadow = true;
+    cuBeHead.position.y = 3;
+    // Add Head to Torso mesh
+    cuBeTorso.add(cuBeHead);
     // add controls
     gui = new GUI();
     control = new Control(customMesh);
