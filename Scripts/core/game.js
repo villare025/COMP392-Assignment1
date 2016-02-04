@@ -113,7 +113,7 @@ function init() {
     cuBeArmLeft.position.z = -3.5;
     // Add Left Arm to Torso mesh
     cuBeTorso.add(cuBeArmLeft);
-    //Create Right Arm
+    // Create Right Arm
     cubeMaterial = new LambertMaterial({ color: 0xFAE7D0 });
     cubeGeometry = new CubeGeometry(1, 1, 3);
     cuBeArmRight = new Mesh(cubeGeometry, cubeMaterial);
@@ -124,6 +124,28 @@ function init() {
     cuBeArmRight.position.z = 3.5;
     // Add Right Arm to Torso mesh
     cuBeTorso.add(cuBeArmRight);
+    // Create Left Leg
+    cubeMaterial = new LambertMaterial({ color: 0xFAE7D0 });
+    cubeGeometry = new CubeGeometry(1, 4, 1);
+    cuBeLegLeft = new Mesh(cubeGeometry, cubeMaterial);
+    cuBeLegLeft.castShadow = true;
+    cuBeLegLeft.receiveShadow = true;
+    cuBeLegLeft.position.x = 0;
+    cuBeLegLeft.position.y = -4;
+    cuBeLegLeft.position.z = -0.9;
+    // Add Left Leg to Torso mesh
+    cuBeTorso.add(cuBeLegLeft);
+    //Create Right Leg
+    cubeMaterial = new LambertMaterial({ color: 0xFAE7D0 });
+    cubeGeometry = new CubeGeometry(1, 4, 1);
+    cuBeLegRight = new Mesh(cubeGeometry, cubeMaterial);
+    cuBeLegRight.castShadow = true;
+    cuBeLegRight.receiveShadow = true;
+    cuBeLegRight.position.x = 0;
+    cuBeLegRight.position.y = -4;
+    cuBeLegRight.position.z = 0.9;
+    // Add Right Leg to Torso mesh
+    cuBeTorso.add(cuBeLegRight);
     // add controls
     gui = new GUI();
     control = new Control(customMesh);
