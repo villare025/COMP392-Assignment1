@@ -190,14 +190,16 @@ function init() {
     // Add Scene Controls
     gui = new GUI();
     
-    // Add Frame Rate Stats
-    addStatsObject();
-    console.log("Added Stats to Scene");
-    
     // Add Overseer Controls 
     //   >> Rotations
     //   >> Outfit Change
+    control = new Control(0.1,  false);
+	addControl(control);
     console.log("Added Overseer Controls");
+    
+    // Add Frame Rate Stats
+    addStatsObject();
+    console.log("Added Stats to Scene");
     
     document.body.appendChild(renderer.domElement);
     gameLoop(); // render the scene	
@@ -208,28 +210,33 @@ function init() {
     //// End Building Cube Being's Overseer Control ////
     ////////////////////////////////////////////////////
 }
-
+// Setup GUI Controls (for the Overseer) 
+function addControl(controlObject: Control): void {
+    gui.add(controlObject, 'rotateSpeed', -0.5, 0.5);
+    gui.add(controlObject, 'rotateX', false);
+    gui.add(controlObject, 'rotateY', false);
+    gui.add(controlObject, 'rotateZ', false);	
+}
 // Setup Main Game Loop
 function gameLoop(): void {
     stats.update();
-
+    
+    // As per Overseer's Will Rotate Cube Being
+    if (control.rotateX) {
+        cuBeTorso.rotation.x += control.rotateSpeed;
+    }
+    if (control.rotateY) {
+        cuBeTorso.rotation.y += control.rotateSpeed;
+    }
+    if (control.rotateZ) {
+        cuBeTorso.rotation.z += control.rotateSpeed;
+    }
+        
     // Render Using requestAnimationFrame
     requestAnimationFrame(gameLoop);
 	
     // Render the Scene
     renderer.render(scene, camera);
-}
-
-// Setup GUI Controls (for the Overseer) 
-function addControl(controlObject: Control): void {
-    gui.add(controlObject, 'clone');
-    for (var index = 0; index < 8; index++) {
-        var folder: GUI;
-        folder = gui.addFolder('Vertices ' + (index + 1));
-        folder.add(controlObject.points[index], 'x', -10, 10);
-        folder.add(controlObject.points[index], 'y', -10, 10);
-        folder.add(controlObject.points[index], 'z', -10, 10);
-    }
 }
 
 //Setup Statistics
