@@ -43,11 +43,24 @@ var control: Control;
 var gui: GUI;
 var stats: Stats;
 var step: number = 0;
+
+// Create Cube Being (cuBe) Body Parts
+var cubeGeoMetry:CubeGeometry;
+var cubeMaterial:LambertMaterial;
+var cuBeHead:Mesh;
+var cuBeTorso:Mesh;
+var cuBeArmLeft:Mesh;
+var cuBeArmRight:Mesh;
+var cuBeLegLeft:Mesh;
+var cuBeLegRight:Mesh;
+
+//Remove these in a bit
 var vertices: Vector3[] = new Array<Vector3>();
 var faces: Face3[] = new Array<Face3>();
 var customGeometry: Geometry;
 var customMaterials: Material[] = new Array<Material>();
 var customMesh: Object3D;
+//
 
 function init() {
     // Instantiate a new Scene object
@@ -60,7 +73,7 @@ function init() {
     // add an axis helper to the scene
     axes = new AxisHelper(20);
     scene.add(axes);
-    console.log("Added Axis Helper to scene...");
+    console.log("Added Axis Helper to Scene...");
     
     //Add a Plane to the Scene
     plane = new gameObject(
