@@ -102,6 +102,19 @@ function init() {
     // Call the Custom Mesh function
     initializeCustomMesh();
     
+    /* 
+        Build Cube Being (cuBe)
+    */
+    
+    //Create Body
+    cubeMaterial = new LambertMaterial({color:0xB67DFC});
+    cubeGeoMetry = new CubeGeometry(2, 5, 4);
+    cuBeTorso = new Mesh(cubeGeoMetry, cubeMaterial);
+    cuBeTorso.castShadow = true;
+    cuBeTorso.receiveShadow = true;
+    cuBeTorso.position.y = 7.5;
+    scene.add(cuBeTorso);
+    
     
     // add controls
     gui = new GUI();
