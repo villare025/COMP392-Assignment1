@@ -42,10 +42,12 @@ var step = 0;
 // Create Cube Being (cuBe) Body Parts
 var cubeGeometry;
 var cubeMaterialSkin;
+var cubeMaterialHair;
 var cubeMaterialOutfit;
 var cubeMaterialEyes;
 var cuBeTorso;
 var cuBeHead;
+var cuBeHair;
 var cuBeEyeLeft;
 var cuBeEyeRight;
 var cuBeArmLeft;
@@ -56,6 +58,7 @@ var cuBeFootLeft;
 var cuBeFootRight;
 var changeOutfit = "#B67DFC";
 var changeSkin = "#FAE7D0";
+var changeHair = "#595959";
 function init() {
     // Instantiate a new Scene object
     scene = new Scene();
@@ -87,6 +90,7 @@ function init() {
     ////////////////////////////////////////////////////
     // Declare CuBe Colors
     cubeMaterialSkin = new LambertMaterial({ color: 0xFAE7D0 });
+    cubeMaterialHair = new LambertMaterial({ color: 0x595959 });
     cubeMaterialOutfit = new LambertMaterial({ color: 0xB67DFC });
     cubeMaterialEyes = new LambertMaterial({ color: 0x595959 });
     console.log("Declared cuBe's 'Fifty' Shades");
@@ -108,6 +112,15 @@ function init() {
     // Add Head to Torso Mesh
     cuBeTorso.add(cuBeHead);
     console.log("Added cuBe's Brains to Scene");
+    // Create CuBe Hair
+    cubeGeometry = new CubeGeometry(1.6, 0.7, 1.8);
+    cuBeHair = new Mesh(cubeGeometry, cubeMaterialHair);
+    cuBeHair.castShadow = true;
+    cuBeHair.receiveShadow = true;
+    cuBeHair.position.y = 1.3;
+    // Add Hair to Head Mesh
+    cuBeHead.add(cuBeHair);
+    console.log("Added cuBe's Hair to Scene");
     // Create Left Eye
     cubeGeometry = new CubeGeometry(0.1, 0.5, 0.2);
     cuBeEyeLeft = new Mesh(cubeGeometry, cubeMaterialEyes);
@@ -206,7 +219,7 @@ function init() {
     // Add Overseer Controls 
     //   >> Rotations
     //   >> Outfit Change
-    control = new Control(0.1, false, changeOutfit, changeSkin);
+    control = new Control(0.1, false, changeOutfit, changeSkin, changeHair);
     addControl(control);
     console.log("Added Overseer Controls");
     // Add Frame Rate Stats
@@ -227,6 +240,7 @@ function addControl(controlObject) {
     gui.add(controlObject, 'rotateZ', false);
     gui.addColor(controlObject, 'changeOutfit').onChange(function (color) { cubeMaterialOutfit.color = new Color(color); });
     gui.addColor(controlObject, 'changeSkin').onChange(function (color) { cubeMaterialSkin.color = new Color(color); });
+    gui.addColor(controlObject, 'changeHair').onChange(function (color) { cubeMaterialHair.color = new Color(color); });
 }
 // Setup Main Game Loop
 function gameLoop() {
