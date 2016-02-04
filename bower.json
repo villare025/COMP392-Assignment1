@@ -1,0 +1,25 @@
+{
+  "name": "COMP392-Assignment1",
+  "authors": [
+    "villare025 <empvillare@yahoo.com>"
+  ],
+  "description": "COMP392-Assignment1:Cube Person",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "homepage": "https://github.com/villare025/COMP392-Assignment1",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "Scripts/lib"
+  ],
+  "dependencies": {
+    "three.js": "threejs#*",
+    "dat-gui": "~0.5.1",
+    "stats.js": "*",
+    "threex.colliders": "*"
+  }
+}
