@@ -128,6 +128,32 @@ function init() {
     // Add Head to Torso mesh
     cuBeTorso.add(cuBeHead); 
     
+    // Create Left Arm
+    cubeMaterial = new LambertMaterial({color:0xFAE7D0});
+    cubeGeometry = new CubeGeometry(1, 1, 3);
+    cuBeArmLeft = new Mesh(cubeGeometry, cubeMaterial);
+    cuBeArmLeft.castShadow = true;
+    cuBeArmLeft.receiveShadow = true;
+    cuBeArmLeft.position.x = 0;
+    cuBeArmLeft.position.y = 1.5;
+    cuBeArmLeft.position.z = -3.5;
+    
+    // Add Left Arm to Torso mesh
+    cuBeTorso.add(cuBeArmLeft);
+    
+    //Create Right Arm
+    cubeMaterial = new LambertMaterial({color:0xFAE7D0});
+    cubeGeometry = new CubeGeometry(1, 1, 3);
+    cuBeArmRight = new Mesh(cubeGeometry, cubeMaterial);
+    cuBeArmRight.castShadow = true;
+    cuBeArmRight.receiveShadow = true;
+    cuBeArmRight.position.x = 0;
+    cuBeArmRight.position.y = 1.5;
+    cuBeArmRight.position.z = 3.5;
+    
+    // Add Right Arm to Torso mesh
+    cuBeTorso.add(cuBeArmRight);
+    
     
     
     
