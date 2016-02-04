@@ -48,13 +48,6 @@ var cuBeArmLeft;
 var cuBeArmRight;
 var cuBeLegLeft;
 var cuBeLegRight;
-//Remove these in a bit
-var vertices = new Array();
-var faces = new Array();
-var customGeometry;
-var customMaterials = new Array();
-var customMesh;
-//
 function init() {
     // Instantiate a new Scene object
     scene = new Scene();
@@ -79,8 +72,6 @@ function init() {
     spotLight.castShadow = true;
     scene.add(spotLight);
     console.log("Added a SpotLight Light to Scene");
-    // Call the Custom Mesh function
-    initializeCustomMesh();
     /*
         Build Cube Being (cuBe)
     */
@@ -148,70 +139,12 @@ function init() {
     cuBeTorso.add(cuBeLegRight);
     // add controls
     gui = new GUI();
-    control = new Control(customMesh);
-    addControlPoints();
-    addControl(control);
     // Add framerate stats
     addStatsObject();
     console.log("Added Stats to scene...");
     document.body.appendChild(renderer.domElement);
     gameLoop(); // render the scene	
     window.addEventListener('resize', onResize, false);
-}
-function initializeCustomMesh() {
-    vertices = [
-        new THREE.Vector3(1, 3, 1),
-        new THREE.Vector3(1, 3, -1),
-        new THREE.Vector3(1, -1, 1),
-        new THREE.Vector3(1, -1, -1),
-        new THREE.Vector3(-1, 3, -1),
-        new THREE.Vector3(-1, 3, 1),
-        new THREE.Vector3(-1, -1, -1),
-        new THREE.Vector3(-1, -1, 1)
-    ];
-    faces = [
-        new THREE.Face3(0, 2, 1),
-        new THREE.Face3(2, 3, 1),
-        new THREE.Face3(4, 6, 5),
-        new THREE.Face3(6, 7, 5),
-        new THREE.Face3(4, 5, 1),
-        new THREE.Face3(5, 0, 1),
-        new THREE.Face3(7, 6, 2),
-        new THREE.Face3(6, 3, 2),
-        new THREE.Face3(5, 7, 0),
-        new THREE.Face3(7, 2, 0),
-        new THREE.Face3(1, 3, 4),
-        new THREE.Face3(3, 6, 4),
-    ];
-    createCustomMesh();
-    console.log("Added Custom Mesh to Scene");
-}
-function addControlPoints() {
-    control.points.push(new Point(3, 5, 3));
-    control.points.push(new Point(3, 5, 0));
-    control.points.push(new Point(3, 0, 3));
-    control.points.push(new Point(3, 0, 0));
-    control.points.push(new Point(0, 5, 0));
-    control.points.push(new Point(0, 5, 3));
-    control.points.push(new Point(0, 0, 0));
-    control.points.push(new Point(0, 0, 3));
-}
-function createCustomMesh() {
-    customGeometry = new Geometry();
-    customGeometry.vertices = vertices;
-    customGeometry.faces = faces;
-    customGeometry.mergeVertices();
-    customGeometry.computeFaceNormals();
-    customMaterials = [
-        new LambertMaterial({ opacity: 0.6, color: 0x44ff44, transparent: true }),
-        new MeshBasicMaterial({ color: 0x000000, wireframe: true })
-    ];
-    customMesh = THREE.SceneUtils.createMultiMaterialObject(customGeometry, customMaterials);
-    customMesh.children.forEach(function (child) {
-        child.castShadow = true;
-    });
-    customMesh.name = "customMesh";
-    scene.add(customMesh);
 }
 function onResize() {
     camera.aspect = window.innerWidth / window.innerHeight;
@@ -239,13 +172,6 @@ function addStatsObject() {
 // Setup main game loop
 function gameLoop() {
     stats.update();
-    vertices = new Array();
-    for (var index = 0; index < 8; index++) {
-        vertices.push(new Vector3(control.points[index].x, control.points[index].y, control.points[index].z));
-    }
-    // remove our customMesh from the scene and add it every frame 
-    scene.remove(scene.getObjectByName("customMesh"));
-    createCustomMesh();
     // render using requestAnimationFrame
     requestAnimationFrame(gameLoop);
     // render the scene
