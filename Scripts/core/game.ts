@@ -46,13 +46,16 @@ var step: number = 0;
 
 // Create Cube Being (cuBe) Body Parts
 var cubeGeometry:CubeGeometry;
-var cubeMaterial:LambertMaterial;
+var cubeMaterialSkin:LambertMaterial;
+var cubeMaterialTorso:LambertMaterial;
 var cuBeHead:Mesh;
 var cuBeTorso:Mesh;
 var cuBeArmLeft:Mesh;
 var cuBeArmRight:Mesh;
 var cuBeLegLeft:Mesh;
 var cuBeLegRight:Mesh;
+var changeOutfit = "#B67DFC";
+var changeSkin = "#FAE7D0";
 
 function init() {
     // Instantiate a new Scene object
@@ -96,10 +99,14 @@ function init() {
     ////       Start Building Cube Being (cuBe)     ////
     ////////////////////////////////////////////////////
     
+    // Declare CuBe Colors
+    cubeMaterialTorso = new LambertMaterial({color:0xB67DFC});
+    cubeMaterialSkin = new LambertMaterial({color:0xFAE7D0});
+    console.log("Declared cuBe's 'Fifty' Shades");
+    
     // Create CuBe Torso
-    cubeMaterial = new LambertMaterial({color:0xB67DFC});
     cubeGeometry = new CubeGeometry(2, 5, 4);
-    cuBeTorso = new Mesh(cubeGeometry, cubeMaterial);
+    cuBeTorso = new Mesh(cubeGeometry, cubeMaterialTorso);
     cuBeTorso.castShadow = true;
     cuBeTorso.receiveShadow = true;
     cuBeTorso.position.y = 7.5;
@@ -109,9 +116,8 @@ function init() {
     console.log("Added cuBe's Essential Parts Container(Torso) to Scene");
     
     // Create CuBe Head
-    cubeMaterial = new LambertMaterial({color:0xFAE7D0});
     cubeGeometry = new CubeGeometry(1.6, 1.9, 1.8);
-    cuBeHead = new Mesh(cubeGeometry, cubeMaterial);
+    cuBeHead = new Mesh(cubeGeometry, cubeMaterialSkin);
     cuBeHead.castShadow = true;
     cuBeHead.receiveShadow = true;
     cuBeHead.position.y = 3;
@@ -121,9 +127,8 @@ function init() {
     console.log("Added cuBe's Brains to Scene");    
     
     // Create Left Arm
-    cubeMaterial = new LambertMaterial({color:0xFAE7D0});
     cubeGeometry = new CubeGeometry(1, 1, 3);
-    cuBeArmLeft = new Mesh(cubeGeometry, cubeMaterial);
+    cuBeArmLeft = new Mesh(cubeGeometry, cubeMaterialSkin);
     cuBeArmLeft.castShadow = true;
     cuBeArmLeft.receiveShadow = true;
     cuBeArmLeft.position.x = 0;
@@ -135,9 +140,8 @@ function init() {
     console.log("Added cuBe's Left Arm to Scene");
     
     // Create Right Arm
-    cubeMaterial = new LambertMaterial({color:0xFAE7D0});
     cubeGeometry = new CubeGeometry(1, 1, 3);
-    cuBeArmRight = new Mesh(cubeGeometry, cubeMaterial);
+    cuBeArmRight = new Mesh(cubeGeometry, cubeMaterialSkin);
     cuBeArmRight.castShadow = true;
     cuBeArmRight.receiveShadow = true;
     cuBeArmRight.position.x = 0;
@@ -149,9 +153,8 @@ function init() {
     console.log("Added cuBe's Right Arm to Scene");
     
     // Create Left Leg
-    cubeMaterial = new LambertMaterial({color:0xFAE7D0});
     cubeGeometry = new CubeGeometry(1, 4, 1);
-    cuBeLegLeft = new Mesh(cubeGeometry, cubeMaterial);
+    cuBeLegLeft = new Mesh(cubeGeometry, cubeMaterialSkin);
     cuBeLegLeft.castShadow = true;
     cuBeLegLeft.receiveShadow = true;
     cuBeLegLeft.position.x = 0;
@@ -163,9 +166,8 @@ function init() {
     console.log("Added cuBe's Left Light to Scene");
     
     //Create Right Leg
-    cubeMaterial = new LambertMaterial({color:0xFAE7D0});
     cubeGeometry = new CubeGeometry(1, 4, 1);
-    cuBeLegRight = new Mesh(cubeGeometry, cubeMaterial);
+    cuBeLegRight = new Mesh(cubeGeometry, cubeMaterialSkin);
     cuBeLegRight.castShadow = true;
     cuBeLegRight.receiveShadow = true;
     cuBeLegRight.position.x = 0;
@@ -193,7 +195,7 @@ function init() {
     // Add Overseer Controls 
     //   >> Rotations
     //   >> Outfit Change
-    control = new Control(0.1,  false);
+    control = new Control(0.1,  false, changeOutfit, changeSkin);
 	addControl(control);
     console.log("Added Overseer Controls");
     
@@ -215,7 +217,10 @@ function addControl(controlObject: Control): void {
     gui.add(controlObject, 'rotateSpeed', -0.5, 0.5);
     gui.add(controlObject, 'rotateX', false);
     gui.add(controlObject, 'rotateY', false);
-    gui.add(controlObject, 'rotateZ', false);	
+    gui.add(controlObject, 'rotateZ', false);
+    
+    gui.addColor(controlObject, 'changeOutfit').onChange((color) =>{cubeMaterialTorso.color = new Color(color);});
+    gui.addColor(controlObject, 'changeSkin').onChange((color) =>{cubeMaterialSkin.color = new Color(color);});
 }
 // Setup Main Game Loop
 function gameLoop(): void {
