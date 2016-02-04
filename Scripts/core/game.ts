@@ -1,6 +1,18 @@
 /// <reference path="_reference.ts"/>
 
 // MAIN GAME FILE
+/*
+Author:                Elaine Mae Villarino (villare025)
+Last Modified By:      Elaine Mae Villarino (villare025) 
+Last Modified Date:    Thursday, February 4th, 2016
+Program Description:   With Three.js, JavaScript, and TypeScript, create a web application that displays a 3D Humanoid Character. 
+                       The Cube Being (cuBe) will be made from Cube Meshes.
+                       GUI Controls should allow the user/overseer to:
+                         >> rotate the Cube Being in any direction (x,y,z). 
+                         >> change the colour properties of Cube Being.
+Revision History:      https://github.com/villare025/COMP392-Assignment1/commits/master
+Last Modification:     Added Program Header Details
+*/
 
 // THREEJS Aliases
 import Scene = THREE.Scene;
@@ -29,7 +41,6 @@ import Point = objects.Point;
 
 //Custom Game Objects
 import gameObject = objects.gameObject;
-
 var scene: Scene;
 var renderer: Renderer;
 var camera: PerspectiveCamera;
@@ -44,7 +55,7 @@ var gui: GUI;
 var stats: Stats;
 var step: number = 0;
 
-// Create Cube Being (cuBe) Body Parts
+// Create Cube Being (cuBe) Game Objects
 var cubeGeometry:CubeGeometry;
 var cubeMaterialSkin:LambertMaterial;
 var cubeMaterialHair:LambertMaterial;
@@ -286,11 +297,13 @@ function init() {
 }
 // Setup GUI Controls (for the Overseer) 
 function addControl(controlObject: Control): void {
+    // Rotation Controls [ speed, onX, onY, onZ ]
     gui.add(controlObject, 'rotateSpeed', -0.5, 0.5);
     gui.add(controlObject, 'rotateX', false);
     gui.add(controlObject, 'rotateY', false);
     gui.add(controlObject, 'rotateZ', false);
     
+    // Color Controls [ Outfit(Torso/Shoes), Skin, Hair ]
     gui.addColor(controlObject, 'changeOutfit').onChange((color) =>{cubeMaterialOutfit.color = new Color(color);});
     gui.addColor(controlObject, 'changeSkin').onChange((color) =>{cubeMaterialSkin.color = new Color(color);});
     gui.addColor(controlObject, 'changeHair').onChange((color) =>{cubeMaterialHair.color = new Color(color);});
