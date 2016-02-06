@@ -76,7 +76,9 @@ var cuBeFootRight:Mesh;
 var changeOutfit = "#B67DFC";
 var changeSkin = "#FAE7D0";
 var changeHair = "#595959";
-var texture = new THREE.MeshPhongMaterial( { map: THREE.ImageUtils.loadTexture('texture/grass.jpg') } );
+var texture = THREE.ImageUtils.loadTexture( 'texture/grass.jpg' );
+texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+texture.repeat.set( 7, 5 );
 
 function init() {
     // Instantiate a new Scene object
@@ -96,7 +98,7 @@ function init() {
     //Add a Plane to the Scene
     plane = new gameObject(
         new PlaneGeometry(60, 40, 1, 1),
-        texture,
+        new THREE.MeshPhongMaterial( { map: texture}),
         0, 0, 0);
     plane.rotation.x = -0.5 * Math.PI;
     plane.castShadow = true;
