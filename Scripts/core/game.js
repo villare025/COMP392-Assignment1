@@ -3,7 +3,7 @@
 /*
 Author:                Elaine Mae Villarino (villare025)
 Last Modified By:      Elaine Mae Villarino (villare025)
-Last Modified Date:    Thursday, February 4th, 2016
+Last Modified Date:    Thursday, February 5th, 2016
 Program Description:   With Three.js, JavaScript, and TypeScript, create a web application that displays a 3D Humanoid Character.
                        The Cube Being (cuBe) will be made from Cube Meshes.
                        GUI Controls should allow the user/overseer to:
