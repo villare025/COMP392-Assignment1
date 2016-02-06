@@ -59,7 +59,8 @@ var cubeMaterialOutfit;
 var cubeMaterialEyes;
 var cuBeTorso;
 var cuBeHead;
-var cuBeHair;
+var cuBeHairTop;
+var cuBeHairBack;
 var cuBeEyeLeft;
 var cuBeEyeRight;
 var cuBeArmLeft;
@@ -71,6 +72,7 @@ var cuBeFootRight;
 var changeOutfit = "#B67DFC";
 var changeSkin = "#FAE7D0";
 var changeHair = "#595959";
+var texture = new THREE.MeshPhongMaterial({ map: THREE.ImageUtils.loadTexture('texture/grass.jpg') });
 function init() {
     // Instantiate a new Scene object
     scene = new Scene();
@@ -83,8 +85,9 @@ function init() {
     scene.add(axes);
     console.log("Added Axis Helper to Scene");
     //Add a Plane to the Scene
-    plane = new gameObject(new PlaneGeometry(60, 40, 1, 1), new LambertMaterial({ color: 0xffffff }), 0, 0, 0);
+    plane = new gameObject(new PlaneGeometry(60, 40, 1, 1), texture, 0, 0, 0);
     plane.rotation.x = -0.5 * Math.PI;
+    plane.castShadow = true;
     scene.add(plane);
     console.log("Added Plane Primitive (Floor) to Scene");
     // Add AmbientLight to Scene
@@ -124,15 +127,35 @@ function init() {
     // Add Head to Torso Mesh
     cuBeTorso.add(cuBeHead);
     console.log("Added cuBe's Brains to Scene");
-    // Create CuBe Hair
+    // Create CuBe Hair Top
     cubeGeometry = new CubeGeometry(1.6, 0.7, 1.8);
-    cuBeHair = new Mesh(cubeGeometry, cubeMaterialHair);
-    cuBeHair.castShadow = true;
-    cuBeHair.receiveShadow = true;
-    cuBeHair.position.y = 1.3;
-    // Add Hair to Head Mesh
-    cuBeHead.add(cuBeHair);
-    console.log("Added cuBe's Hair to Scene");
+    cuBeHairTop = new Mesh(cubeGeometry, cubeMaterialHair);
+    cuBeHairTop.castShadow = true;
+    cuBeHairTop.receiveShadow = true;
+    cuBeHairTop.position.y = 1.3;
+    // Add Hair Top to Head Mesh
+    cuBeHead.add(cuBeHairTop);
+    console.log("Added cuBe's Hair Top to Scene");
+    // Create CuBe Hair Back
+    cubeGeometry = new CubeGeometry(0.4, 1.6, 1.8);
+    cuBeHairBack = new Mesh(cubeGeometry, cubeMaterialHair);
+    cuBeHairBack.castShadow = true;
+    cuBeHairBack.receiveShadow = true;
+    cuBeHairBack.position.x = 1;
+    cuBeHairBack.position.y = 0.87;
+    // Add Hair Back to Head Mesh
+    cuBeHead.add(cuBeHairBack);
+    console.log("Added cuBe's Hair Back to Scene");
+    // Create CuBe Hair Back
+    cubeGeometry = new CubeGeometry(0.4, 1.6, 1.8);
+    cuBeHairBack = new Mesh(cubeGeometry, cubeMaterialHair);
+    cuBeHairBack.castShadow = true;
+    cuBeHairBack.receiveShadow = true;
+    cuBeHairBack.position.x = 1;
+    cuBeHairBack.position.y = 0.87;
+    // Add Hair Back to Head Mesh
+    cuBeHead.add(cuBeHairBack);
+    console.log("Added cuBe's Hair Back to Scene");
     // Create Left Eye
     cubeGeometry = new CubeGeometry(0.1, 0.5, 0.2);
     cuBeEyeLeft = new Mesh(cubeGeometry, cubeMaterialEyes);
