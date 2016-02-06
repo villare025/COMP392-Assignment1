@@ -11,7 +11,7 @@ Program Description:   With Three.js, JavaScript, and TypeScript, create a web a
                          >> rotate the Cube Being in any direction (x,y,z). 
                          >> change the colour properties of Cube Being.
 Revision History:      https://github.com/villare025/COMP392-Assignment1/commits/master
-Last Modification:     Added Program Header Details
+Last Modification:     Added More Comments and Fixed Texture
 */
 
 // THREEJS Aliases
@@ -73,9 +73,14 @@ var cuBeLegLeft:Mesh;
 var cuBeLegRight:Mesh;
 var cuBeFootLeft:Mesh;
 var cuBeFootRight:Mesh;
+
+// Set color options hex code (Outfit, Skin, Hair)
 var changeOutfit = "#B67DFC";
 var changeSkin = "#FAE7D0";
 var changeHair = "#595959";
+
+// Set plane texture to grass.jpg
+// Image is taken from http://www.tutorialsforblender3d.com/Textures/Grass/textures/Grass_2.png
 var texture = THREE.ImageUtils.loadTexture( 'texture/grass.jpg' );
 texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
 texture.repeat.set( 7, 5 );
@@ -103,7 +108,7 @@ function init() {
     plane.rotation.x = -0.5 * Math.PI;
     plane.castShadow = true;
     scene.add(plane);
-    console.log("Added Plane Primitive (Floor) to Scene");
+    console.log("Added Plane Primitive (Grass) to Scene");
      
     
     // Add AmbientLight to Scene
