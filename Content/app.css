@@ -1,5 +1,24 @@
+/*
+Author:                Elaine Mae Villarino (villare025)
+Last Modified By:      Elaine Mae Villarino (villare025) 
+Last Modified Date:    Friday, February 5th, 2016
+Program Description:   Add styles to format the index.html page
+Revision History:      https://github.com/villare025/COMP392-Assignment1/commits/master
+Last Modification:     Added Program Header Details + Header Styling
+*/
+
 body{
     /* set margin to 0 and overflow to hidden, to use the complete page */
     margin: 0;
     overflow: hidden;
+    background-color: #000000;
+}
+header{
+    /*display: none!important;*/
+}
+p{
+    text-align: center;
+    font-family:  Arial, Helvetica, sans-serif;
+    font-size: 0.7em;
+    color: #ffffff;
 }
